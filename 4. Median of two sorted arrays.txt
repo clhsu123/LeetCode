@@ -1,0 +1,50 @@
+tutorial video url:https://youtu.be/KB9IcSCDQ9k
+
+programming language: Python
+
+n1 = len(nums1)
+        n2 = len(nums2)
+        
+        if n1>n2:
+            return self.findMedianSortedArrays(nums2, nums1)
+        k = (n1+n2+1)/2
+        
+        left = 0
+        right = n1
+        
+        while(left<right):
+            m1 = left + (right - left)/2
+            m2 = k - m1
+            if(nums1[m1] < nums2[m2-1]):
+                left = m1+1
+            else:
+                right = m1
+        m1 = left
+        m2 = k - m1
+        
+        if m1 == 0:
+            a1 = float('-inf')
+        else:
+            a1 = nums1[m1-1]
+        if m2 == 0:
+            a2 = float('-inf')
+        else:
+            a2 = nums2[m2-1]
+        
+        c1 = max(a1, a2)
+        
+        if not (n1+n2)%2==0:
+            return c1
+        
+        if m1 >= n1:
+            a1 = float('inf')
+        else:
+            a1 = nums1[m1]
+        if m2 >= n2:
+            a2 = float('inf')
+        else:
+            a2 = nums2[m2] 
+            
+        c2 = min(a1, a2)
+        
+        return (c1+c2)/2.0
