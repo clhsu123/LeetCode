@@ -1,0 +1,25 @@
+Programming Language: Python
+
+if s == "":
+            return True
+        if len(s)%2 != 0:
+            return False
+        
+        ans_bank_1 = ['(', '{', '[']
+        ans_bank_2 = [')', '}', ']']
+        stack = []
+        count = 0
+        for i in s:
+            if i in ans_bank_1:
+                stack.append(i)
+                count +=1
+            elif i in ans_bank_2:
+                count -=1
+                if len(stack) == 0:
+                    return False
+                current_val = stack.pop()
+                if ans_bank_1.index(current_val) != ans_bank_2.index(i):
+                    return False
+            else:
+                return False
+        return count == 0

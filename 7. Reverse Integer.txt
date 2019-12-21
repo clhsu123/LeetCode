@@ -1,0 +1,36 @@
+Programming Language: Python
+
+string_x = str(x) # convert input data type to string
+        result= "" # initialize the result (string)
+        judge = False # this is a condition helps to decide when to start adding number to result (eliminate all 0 before the first non-zero digit)
+        if string_x[0] != '-': # if input is a positive integer
+            for x in range(len(string_x)):
+                result+=(string_x[-(x+1)])
+            if int(result)>= -pow(2,31) and int(result)<=(pow(2,31)-1): # if the result is within the qualified range given by the question, return the result
+                return int(result)
+            return 0 # else, return zero
+        string_x = string_x[1:] # if input is a negative integer, neglect the first digit ('-') first, and add it to the reversed result in the end
+        for x in range(len(string_x)):
+                result+=(string_x[-(x+1)])
+        result = '-'+result
+        if int(result)>= -pow(2,31) and int(result)<=(pow(2,31)-1): # if the result is within the qualified range given by the question, return the result
+                return int(result)
+        return 0 # else, return 0
+
+Programming Language: C++
+
+class Solution {
+public:
+    int reverse(int x) {
+        int rev = 0;
+        while(x !=0)
+        {
+            int pop = x % 10;
+            x /= 10;
+            if (rev > INT_MAX/10 || (rev == INT_MAX / 10 && pop > 7)) return 0;
+            if (rev < INT_MIN/10 || (rev == INT_MIN / 10 && pop < -8)) return 0;
+            rev = rev * 10 + pop;
+        }
+        return rev;
+    }
+};

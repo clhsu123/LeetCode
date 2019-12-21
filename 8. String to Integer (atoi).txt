@@ -1,0 +1,54 @@
+Programming Language: Python
+
+current_value = 0 # initialize the value to 0
+        sign = 1
+        started = False # check if the first char that is not whitespace has appeared
+        
+        for i in str:
+            if(i == ' '):
+                if started == True:
+                     if current_value * sign < -pow(2, 31):
+                        return -pow(2,31)
+                     if current_value * sign > pow(2, 31)-1:
+                        return pow(2, 31) -1
+                     return current_value * sign
+            else: # once enter this condition, turn the 'started' to true, meaning that the first char that is not whitespace has appeared
+                if i == '+':
+                    if started == True:
+                        if current_value * sign < -pow(2, 31):
+                            return -pow(2,31)
+                        if current_value * sign > pow(2, 31)-1:
+                            return pow(2, 31) -1
+                        return current_value * sign
+                elif i == '-':
+                    if started == True:
+                        if current_value * sign < -pow(2, 31):
+                            return -pow(2,31)
+                        if current_value * sign > pow(2, 31)-1:
+                            return pow(2, 31) -1
+                        return current_value * sign
+                    else:
+                        sign = -1
+                elif i == '.':
+                    if started == True:
+                        if current_value * sign < -pow(2, 31):
+                            return -pow(2,31)
+                        if current_value * sign > pow(2, 31)-1:
+                            return pow(2, 31) -1
+                        return current_value * sign
+                    return 0
+                elif ord(i) >= 48 and ord(i) <= 57:
+                    new_value = current_value*10 + (ord(i)-48)
+                    current_value = new_value
+                else:
+                    if current_value * sign < -pow(2, 31):
+                        return -pow(2,31)
+                    if current_value * sign > pow(2, 31)-1:
+                        return pow(2, 31) -1
+                    return current_value * sign
+                started = True
+        if current_value * sign < -pow(2, 31):
+            return -pow(2,31)
+        if current_value * sign > pow(2, 31)-1:
+            return pow(2, 31) -1
+        return current_value * sign
