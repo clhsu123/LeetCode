@@ -1,0 +1,3 @@
+Programming Language: Python
+
+return pow(x, n)

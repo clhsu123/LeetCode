@@ -1,0 +1,30 @@
+Programming Language: Java
+
+public boolean hasPathSum(TreeNode root, int sum) {
+       if (root == null) return false;  // check if the root argument root is null, if it's null, return false
+        
+        Stack<TreeNode> node_stack = new Stack(); // declare a Stack called node_stack that stores TreeNode datas 
+        Stack<Integer> sum_stack = new Stack(); // declare a Stack called sum_stack that stores Integer datas
+        // node_stack and sum_stack　永遠同步更新，意味著 the ith element in node_stack　對應到 the ith element in sum_stack
+        node_stack.add(root); //put the argument root into node_stack
+        sum_stack.add(sum-root.val); // put the sum minus values of root into sum_stack, our purpose is to minus the sum to 0, meaning we have found the path that adds up to the sum
+        
+        while(!node_stack.isEmpty()){ // when there's still something in the node_stack
+            TreeNode current_node = node_stack.pop(); // take out 1 node from node_stack and assign it to current_node
+            int current_sum = sum_stack.pop(); // take out 1 integer from sum_stak and assign it to current_sum
+            
+            if(current_node.left == null && current_node.right == null && current_sum == 0){ // if we traverse to the leaf and the sum is 0, meaning the path adds up to the sum, we should return true
+                return true;
+            }
+            if(current_node.left != null){
+                node_stack.add(current_node.left); // add left root to node_stack
+                sum_stack.add(current_sum-current_node.left.val); // add sum minus value of left root to sum_stack
+            }
+            if(current_node.right!= null){ 
+                node_stack.add(current_node.right); // add right root to node_stack
+                sum_stack.add(current_sum-current_node.right.val); // add sum minus value of right root to sum_stack
+            }
+        }
+        
+        return false;
+}

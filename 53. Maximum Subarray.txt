@@ -1,0 +1,11 @@
+Programming Language: Python
+
+total = 0
+        ans = float('-inf')
+        
+        for i in nums:
+            if total < 0 :
+                total = 0
+            total += i
+            ans = max(ans, total)
+        return ans

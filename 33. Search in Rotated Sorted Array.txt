@@ -1,0 +1,9 @@
+Programming Language: Python
+
+count = -1
+        for x in nums:
+            count+=1
+            if x==target:
+                return count
+        return -1
+        

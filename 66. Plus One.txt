@@ -1,0 +1,10 @@
+Programming Language: Python
+
+ans = []
+        origin = 0
+        for i in range(len(digits)):
+            origin += digits[-i-1]*pow(10,i)
+
+        result = origin + 1
+        return [int(i) for i in str(result)]
+        

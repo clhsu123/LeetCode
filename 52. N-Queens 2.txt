@@ -1,0 +1,38 @@
+Programming Language: Python
+
+ans = []
+        board = [['.' for i in range(n)] for i in range(n)]
+        col = [False]*n
+        diag_1 = [False]*(2*n-1)
+        diag_2 = [False]*(2*n-1)
+        
+        def available(x, y):
+            return not col[x] and not diag_1[x+y] and not diag_2[x-y+n-1]
+        def update_board(x, y, judge):
+            if judge == True:
+                col[x] = True
+                diag_1[x+y] = True
+                diag_2[x-y+n-1] = True
+                board[y][x] = 'Q'
+            else:
+                col[x] = False
+                diag_1[x+y] = False
+                diag_2[x-y+n-1] = False
+                board[y][x] = '.'
+                
+        def n_queen(y, n):
+            if y>=n:
+                temp=[]
+                for i in range(n):
+                    temp.append(''.join(board[i]))
+                ans.append(temp)
+                return
+        
+            for x in range(n):
+                if not available(x, y):
+                    continue
+                update_board(x, y, True)
+                n_queen(y+1, n)
+                update_board(x, y, False)
+        n_queen(0, n)
+        return len(ans)  

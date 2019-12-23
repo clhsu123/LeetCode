@@ -1,0 +1,20 @@
+Programming Language: Python
+
+ans = []
+        path = []
+        if (not root):
+            return []
+        
+        def find_path(root, running_sum, path):
+            running_sum += root.val
+            path.append(root.val)
+            
+            if (root.left == None and root.right == None and running_sum == sum):
+                ans.append(path)
+            else:
+                if(not root.left == None):
+                    find_path(root.left, running_sum, list(path))
+                if(not root.right == None):
+                    find_path(root.right, running_sum, list(path))
+        find_path(root, 0, path)
+        return ans

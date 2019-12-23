@@ -1,0 +1,6 @@
+Programming Language: Python
+
+if(pow(num, 0.5) == int(pow(num, 0.5))):
+            return True
+        return False
+        

@@ -1,0 +1,23 @@
+Programming Language: Python
+
+l1_list = []
+        l2_list = []
+        result_list = []
+        while(l1):
+            current_value = l1.val
+            l1_list.append(current_value)
+            l1 = l1.next
+        while(l2):
+            current_value = l2.val
+            l2_list.append(current_value)
+            l2 = l2.next
+        result_list = sorted(l1_list+l2_list)
+        if len(result_list) == 0:
+            return None
+        result = ListNode(result_list[0])
+        itr = result
+        for i in xrange(1, len(result_list)):
+            itr.next = ListNode(result_list[i])
+            itr = itr.next
+        return result
+            

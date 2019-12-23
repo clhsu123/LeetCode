@@ -1,0 +1,7 @@
+Prgramming Language: Python
+
+min = nums[0]
+        for x in nums:
+            if x < min:
+                min = x
+        return min

@@ -1,0 +1,21 @@
+Programming Language: Java
+
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return helper(postorder.length - 1, 0, inorder.length - 1, postorder, inorder);
+    }
+    
+    public TreeNode helper(int postEnd, int inStart, int inEnd, int[] postorder, int[] inorder){
+        if(postEnd < 0 || inEnd < inStart){
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        int index = 0;
+        for(int i = inEnd; i>=inStart; i--){
+            if(inorder[i] == root.val){
+                index = i;
+            }
+        }
+        root.left = helper(postEnd - 1 - inEnd + index, inStart, index - 1, postorder, inorder);
+        root.right = helper(postEnd - 1, index + 1, inEnd, postorder, inorder);
+        return root;
+    }

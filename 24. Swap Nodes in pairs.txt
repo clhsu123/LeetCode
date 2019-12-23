@@ -1,0 +1,14 @@
+Programming Language: Python
+
+dummy = ListNode(0)
+        dummy.next = head
+        current = dummy
+        
+        while(not current.next == None and not current.next.next == None):
+            temp = current.next
+            current.next = temp.next
+            temp.next = temp.next.next
+            current.next.next = temp
+            current = current.next.next
+        
+        return dummy.next

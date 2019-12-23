@@ -1,0 +1,15 @@
+Programming Language: Python
+
+def unique_list(list_1):
+            unique_list = []
+            for x in list_1:
+                if x not in unique_list:
+                    unique_list.append(x)
+            return unique_list
+        nums1= unique_list(nums1)
+        nums2= unique_list(nums2)
+        interc  ept = []
+        for x in nums1:
+            if x in nums2:
+                intercept.append(x)
+        return intercept

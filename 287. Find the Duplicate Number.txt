@@ -1,0 +1,7 @@
+Programming Language: Python
+
+data = []
+        for x in nums:
+            if x in data:
+                return x
+            data.append(x)

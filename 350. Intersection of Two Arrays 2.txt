@@ -1,0 +1,8 @@
+Programming Language: Python
+
+result = []
+        for x in nums1:
+            if x in nums2:
+                nums2.remove(x)
+                result.append(x)
+        return result
