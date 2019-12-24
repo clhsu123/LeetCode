@@ -1,0 +1,15 @@
+Programming Language: Python
+
+if m == 0 or n == 0:
+            return 1
+        return self.C_calculate(m+n-2, n-1)
+    
+    def C_calculate(self, m, n):
+        a = 1
+        for i in range(n):
+            a *= m
+            m -=1
+        b = 1
+        for i in range(n):
+            b *= (i+1)
+        return a/b
