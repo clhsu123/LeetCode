@@ -1,0 +1,22 @@
+Programming Language: Python
+
+ if len(strs) == 0:
+            return ""
+        if len(strs) == 1:
+            return strs[0]
+        min_val = float('inf')
+        result = ""
+        for i in strs:
+            if len(i) < min_val:
+                min_val = len(i)
+        for j in range(min_val):
+            a = True
+            for i in xrange(1, len(strs)):
+                if strs[i][j] != strs[i-1][j]:
+                    a = False
+                    break
+            if a == True:
+                result+=strs[0][j]
+            else:
+                break
+        return result

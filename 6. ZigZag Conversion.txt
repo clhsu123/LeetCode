@@ -1,0 +1,21 @@
+Programming Language: Python
+
+if numRows == 1:
+            return s
+        ans = ["" for i in range(numRows)]
+        result = ""
+        go_down = True
+        row = 0
+        for i in s:
+            ans[row]+=str(i)
+            if go_down == True:
+                row += 1
+            else:
+                row -=1
+            if row == numRows-1:
+                go_down = False
+            if row == 0:
+                go_down = True
+        for i in ans:
+            result += i
+        return result
