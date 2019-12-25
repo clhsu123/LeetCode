@@ -1,0 +1,82 @@
+Programming Language: Python
+
+Solution 1: Back Tracking
+This is the inefficient solution where we try every single jump pattern that takes us from the first position to the last. We start from the first position and jump to every index that is reachable. We repeat the process untill last index is reached. When stuck, backtrack.
+
+code: 
+
+def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        return self.canJumpFromPosition(0, nums)
+    
+    def canJumpFromPosition(self, position, nums):
+        if position == len(nums)-1:
+            return True
+        
+        furthestJump = min(position + nums[position], len(nums)-1)
+        
+        for i in xrange(furthestJump, position, -1):
+            if self.canJumpFromPosition(i, nums):
+                return True
+        return False
+
+Solution 2: Dynamic Programming Top-Down
+Top-down Dynamic Programming can be thought of as optimized backtracking. It relies on the observation that once we determine that a certain index is good / bad, this result will never change. This means that we can store the result and not need to recompute it every time.
+Therefore, for each position in the array, we remember whether the index is good or bad. Let's call this array memo and let its values be either one of: GOOD, BAD, UNKNOWN. This technique is called memoization.
+
+code:
+
+
+def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        mem = [0 for i in range(len(nums))]
+        mem[len(nums)-1] = 1
+        return self.canJumpFromPosition(0, nums, mem)
+    
+    def canJumpFromPosition(self, position, nums, mem):
+        if position == len(nums)-1:
+            mem[position] = 1
+            return True
+
+        if mem[position] == 1:
+            return True
+        if mem[position] == 2:
+            return False
+
+        furthestJump = min(position + nums[position], len(nums)-1)
+
+        for i in xrange(furthestJump, position, -1):
+            if self.canJumpFromPosition(i, nums, mem):
+                mem[position] = 1
+                return True
+                
+        mem[position] = 2
+        return False
+
+Solution 3: Dynamic Programmm
+Top-down to bottom-up conversion is done by eliminating recursion. In practice, this achieves better performance as we no longer have the method stack overhead and might even benefit from some caching. More importantly, this step opens up possibilities for future optimization. The recursion is usually eliminated by trying to reverse the order of the steps from the top-down approach.
+
+code:
+
+def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        mem = [0 for i in range(len(nums))]
+        mem[len(nums)-1] = 1
+        
+        for i in xrange(len(nums)-2, -1, -1):
+            furthestJump = min(i+nums[i], len(nums)-1)
+            for j in xrange(i+1, furthestJump+1, 1):
+                if(mem[j] == 1):
+                    mem[i] = 1
+                    break
+        
+        return mem[0] == 1
