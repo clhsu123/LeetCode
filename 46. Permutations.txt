@@ -1,0 +1,22 @@
+Programming Language: Python
+
+code:
+
+def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        
+        self.ans = []
+        self.len_nums = len(nums)
+        self.helper(nums, [])
+        return self.ans
+    
+    def helper(self, nums, tmp):
+        if len(tmp) == self.len_nums:
+            self.ans.append(tmp)
+            return 
+        for i in range(len(nums)):
+            self.helper(nums[:i]+nums[i+1:], tmp+[nums[i]])
+        
