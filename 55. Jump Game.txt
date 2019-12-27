@@ -80,3 +80,38 @@ def canJump(self, nums):
                     break
         
         return mem[0] == 1
+
+Programming Language: C++
+
+Solution 3:
+
+code:
+
+public:
+    bool canJump(vector<int>& nums) {
+        int num_size = nums.size();
+        vector<int> mem;
+        mem.assign(num_size, 0);
+        mem[num_size-1] = 1;
+        int furthestJump;
+        for(int i = num_size - 2; i>=0; i--)
+        {
+            if (i+nums[i] < num_size-1)
+            {
+                furthestJump = (i+nums[i]);
+            }
+            else
+            {
+                furthestJump = num_size-1;
+            }
+            for(int j = i+1; j <= furthestJump; j++)
+            {
+                if (mem[j] == 1)
+                {
+                    mem[i] = 1;
+                    break;
+                }
+            }
+        }
+        return mem[0] == 1;
+    }
