@@ -17,3 +17,28 @@ public List<Integer> postorderTraversal(TreeNode root) {
             res.add(root.val);
         }
     }
+
+
+Programming Language: Python
+Solution: Recursion
+
+code:
+def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = []
+        self.Traverse(root, ans)
+        
+        return ans
+    
+    def Traverse(self, root, ans):
+        if root == None:
+            return
+        if root.left == None and root.right == None:
+            ans.append(root.val)
+            return
+        self.Traverse(root.left, ans)
+        self.Traverse(root.right, ans)
+        ans.append(root.val)
