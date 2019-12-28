@@ -21,3 +21,26 @@ Stack<TreeNode> stack = new Stack<>();
                 
         }
         return result;
+
+Programming Language: Python
+Solution: Recursion
+
+def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = []
+        self.Traverse(root, ans)
+        
+        return ans
+    
+    def Traverse(self, root, ans):
+        if root == None:
+            return
+        if root.left == None and root.right == None:
+            ans.append(root.val)
+            return
+        self.Traverse(root.left, ans)
+        ans.append(root.val)
+        self.Traverse(root.right, ans)
