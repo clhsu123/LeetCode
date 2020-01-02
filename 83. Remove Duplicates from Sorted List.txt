@@ -1,0 +1,21 @@
+Programming Language: Python
+
+if head == None or head.next == None:
+            return head
+        temp = head
+        data = []
+        while(not temp == None):
+            data.append(temp.val)
+            temp = temp.next
+        base = []
+        for x in data:
+            if x in base:
+                continue
+            base.append(x)
+        result = ListNode(base[0])
+        temp = result
+        for i in range(1, len(base)):
+            temp.next = ListNode(0)
+            temp.next.val = base[i]
+            temp = temp.next
+        return result
