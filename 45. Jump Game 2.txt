@@ -1,0 +1,45 @@
+Programming Language: Python
+
+code:
+
+def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        self.global_min = float('inf')
+        mem = [0 for i in range(len(nums))]
+        mem[len(nums)-1] = 1
+        self.count_jump(nums, 0, 0, mem)
+        return self.global_min
+    
+    def count_jump(self, nums, current_pos, count, mem):
+        if current_pos == (len(nums))-1:
+            if count < self.global_min:
+                self.global_min = count
+            return
+        furthest = min(len(nums)-1, current_pos+nums[current_pos])
+        for i in xrange(furthest, current_pos, -1):
+            if self.canJumpFromPosition(i, nums, mem):
+                self.count_jump(nums, i, count+1, mem)
+            
+    def canJumpFromPosition(self, position, nums, mem):
+        if position == len(nums)-1:
+            mem[position] = 1
+            return True
+
+        if mem[position] == 1:
+            return True
+        if mem[position] == 2:
+            return False
+
+        furthestJump = min(position + nums[position], len(nums)-1)
+
+        for i in xrange(furthestJump, position, -1):
+            if self.canJumpFromPosition(i, nums, mem):
+                mem[position] = 1
+                mem[i] = 1
+                return True
+                
+        mem[position] = 2
+        return False
