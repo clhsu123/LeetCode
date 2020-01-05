@@ -1,0 +1,89 @@
+Programming Language: Python
+
+Soultion 1: Brute Force
+
+To generate all sequences, we use a recursion. All sequences of length n is just '(' plus all sequences of length n-1, and then ')' plus all sequences of length n-1.
+
+To check whether a sequence is valid, we keep track of balance, the net number of opening brackets minus closing brackets. If it falls below zero at any time, or doesn't end in zero, the sequence is invalid - otherwise it is valid.
+
+Code:
+
+if n == 0:
+            return [""]
+        ans = []
+        def generate(A):
+            if len(A) == 2*n:
+                if valid(A):
+                    ans.append("".join(A))
+                return 
+            A.append('(')
+            generate(A)
+            A.pop()
+            A.append(')')
+            generate(A)
+            A.pop()
+        def valid(A):
+            balance = 0
+            for i in A:
+                if i == '(':
+                    balance += 1
+                else:
+                    balance -=1
+                if balance < 0:
+                    return False
+            return balance == 0
+        
+        generate([])
+        return ans
+
+Solution 2:
+
+We can start an opening bracket if we still have one (of n) left to place. And we can start a closing bracket if it would not exceed the number of opening brackets.
+
+Code:
+
+if n == 0:
+            return [""]
+        ans = []
+        def backtrack(S, left, right): # left = number of opening bracket, right = number of closing bracket
+            if len(S) == 2*n:
+                ans.append(S)
+                return
+            if left < n: # when we still have one left to place, place '(' and call backtrack fucntion
+                backtrack(S+'(', left+1, right)
+            if right < left:
+                backtrack(S+')', left, right+1) # we could start the closing bracket as it does not exceed the opening bracket
+        backtrack('', 0, 0) # at the beginning, the numbers of opening and closing brackets are both 0
+        return ans
+
+Solution 3:
+
+Code:
+
+"""
+        Lets f(n) is a function which is set of valid string with n (matched) parantheses.
+        f(0) = ‘’
+        f(1) = (f(0))f(0)
+        f(2) = (f(0))f(1) + (f(1))f(0)
+        f(3) = (f(0))f(2) + (f(1))f(1) + (f(2))f(0)
+        
+        In general
+        
+        f(n) = ( f(0) ) f(n-1) + ( f(1) ) f(n-2) + ( f(2) ) f(n-3) + ...... + ( f(n-1) ) f(0)
+
+        f(n) = for all x in range(n) , y in range(n)[::-1] ( (x) + y)
+        
+        A matched paranthesis string can be 
+            - empty
+            - constructed by enclosing a matched string in ( )
+            - can be constructed by concatenation of two matched strings
+        """
+        
+        parantheses = [[] for i in range(n+1)]
+        parantheses[0] += '',
+        for i in range(1,n+1):
+            for j,k in zip(range(i), reversed(range(i))):
+                for x in parantheses[j]:
+                    for y in parantheses[k]:
+                        parantheses[i].append( '(' + x + ')' + y)
+        return parantheses[-1]
