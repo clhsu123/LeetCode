@@ -1,5 +1,7 @@
 Programming Language: Java
 
+Code:
+
 public int maxDepth(TreeNode root) {
         if (root == null){
             return 0;
@@ -8,3 +10,20 @@ public int maxDepth(TreeNode root) {
         int right_answer = maxDepth(root.right);
         return Math.max(left_answer, right_answer)+1;
         }
+
+Programming Language: Python
+
+Code:
+
+def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root == None:
+            return 0
+        
+        left_max = self.maxDepth(root.left)
+        right_max = self.maxDepth(root.right)
+        
+        return max(left_max, right_max)+1
