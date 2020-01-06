@@ -1,0 +1,31 @@
+Programming Language: Python
+
+Code:
+
+def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head == None:
+            return None
+        
+        data = []
+        ans = []
+        while(not head == None):
+            data.append(head.val)
+            head = head.next
+        
+        for i in xrange(len(data)-1, -1, -1):
+            ans.append(data[i])
+            
+        
+        result = ListNode(ans[0])
+        tmp = result
+        
+        for i in xrange(1, len(ans), 1):
+            tmp.next = ListNode(0)
+            tmp.next.val = ans[i]
+            tmp = tmp.next
+            
+        return result
