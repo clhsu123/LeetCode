@@ -1,0 +1,31 @@
+Programming Language: Python
+
+Solution 1: Brute Force
+Straightforward method, using iteration to find the duplicates. However, this algorithm would not pass all test cases due to time limit execceding.
+
+Code:
+
+database = []
+        ans = []
+        
+        for i in nums:
+            if i in database:
+                if not i in ans:
+                    ans.append(i)
+            database.append(i)
+
+        return ans
+
+Solution 2: Tricky algorithm using index, the explanation video's URL: https://youtu.be/aMsSF1Il3IY
+
+Code:
+
+ans = []
+        
+        for i in range(len(nums)):
+            index = abs(nums[i])-1
+            if nums[index] < 0:
+                ans.append(abs(nums[i]))
+            nums[index] = -nums[index]
+        
+        return ans
