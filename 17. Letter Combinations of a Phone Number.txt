@@ -1,0 +1,38 @@
+Programming Language: Python
+
+Solution: backtracking + recursion
+Here is a backtrack function backtrack(combination, next_digits) which takes as arguments an ongoing letter combination and the next digits to check.
+
+If there is no more digits to check that means that the current combination is done.
+If there are still digits to check :
+Iterate over the letters mapping the next available digit.
+Append the current letter to the current combination combination = combination + letter.
+Proceed to check next digits : backtrack(combination + letter, next_digits[1:]).
+
+Code:
+
+def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        
+        self.phone = {'2':'abc', 
+                 '3':'def',
+                 '4':'ghi',
+                 '5':'jkl',
+                 '6':'mno',
+                 '7':'pqrs',
+                 '8':'tuv',
+                 '9':'wxyz'}
+        self.output = []
+        if digits:
+            self.backtrack("", digits)
+        return self.output
+    
+    def backtrack(self, combination, next_digits):
+        if len(next_digits) == 0:
+            self.output.append(combination)
+        else:
+            for letters in self.phone[next_digits[0]]:
+                self.backtrack(combination+letters, next_digits[1:])
