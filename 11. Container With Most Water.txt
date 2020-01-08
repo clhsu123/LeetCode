@@ -1,0 +1,51 @@
+Programming Language: Python
+
+Solution: Brute Force (Time limit exceeded)
+
+Code:
+
+ def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        global_max = float('-inf')
+        
+        for i in range(len(height)-1):
+            for j in range(i+1, len(height)):
+                global_max = max(global_max, self.countArea(height[i], height[j], j-i))     
+        
+        return global_max
+    
+    def countArea(self, left, right, length):
+        return min(left, right)*length
+
+
+Solution: Two Pointer Approach
+We take two pointers, one at the beginning and one at the end of the array constituting the length of the lines. Futher, we maintain a variable \text{maxarea}maxarea to store the maximum area obtained till now. At every step, we find out the area formed between them, update \text{maxarea}maxarea and move the pointer pointing to the shorter line towards the other end by one step.
+
+How this approach works?
+
+Initially we consider the area constituting the exterior most lines. Now, to maximize the area, we need to consider the area between the lines of larger lengths. If we try to move the pointer at the longer line inwards, we won't gain any increase in area, since it is limited by the shorter line. But moving the shorter line's pointer could turn out to be beneficial, as per the same argument, despite the reduction in the width. This is done since a relatively longer line obtained by moving the shorter line's pointer might overcome the reduction in area caused by the width reduction.
+
+Code:
+
+def maxArea(self, height): 
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        
+        left = 0 
+        right = len(height) - 1 
+        
+        global_max = float('-inf')
+        
+        while(left < right):
+            global_max = max(global_max, min(height[left], height[right])*(right - left))
+            if height[right] < height[left]:
+                right -= 1
+            else:
+                left += 1
+        return global_max
+
