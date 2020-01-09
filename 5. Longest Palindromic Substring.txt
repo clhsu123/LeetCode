@@ -1,0 +1,118 @@
+Programming Language: Python
+
+Soltion 1: Brute Force (Time Limit Exceeded)
+
+Code:
+
+def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        
+        if len(s)<2:
+            return s
+        ans_database = []
+        
+        for i in range(len(s)-1):
+            for j in range(i+1, len(s)):
+                if self.isPalindromic(s[i:j+1]):
+                    ans_database.append(s[i:j+1])
+        if len(ans_database) == 0:
+            return s[0]
+        
+        longest_ans = ""
+        length = float('-inf')
+        
+        for s in ans_database:
+            if len(s) > length:
+                length = len(s)
+                longest_ans = s
+        return longest_ans
+        
+    def isPalindromic(self, s):
+        for i in range(len(s)/2+1):
+            if s[i] != s[-1-i]:
+                return False
+        return True
+
+Solution 2: Recursion with 2 pointers (Time Limit Exceeded)
+
+Code:
+
+def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s) < 2:
+            return s
+        
+        self.ans_database = []
+        self.helper(s, 0, len(s)-1)
+        if len(self.ans_database) == 0:
+            return s[0]
+        
+        longest_ans = ""
+        length = float('-inf')
+        
+        for s in self.ans_database:
+            if len(s) > length:
+                length = len(s)
+                longest_ans = s
+        return longest_ans
+    
+    def helper(self, s, left, right):
+        if left == right:
+            return
+        if s[left] == s[right] and self.isPalindromic(s[left:right+1]):
+            self.ans_database.append(s[left:right+1])
+            return
+        self.helper(s, left+1, right)
+        self.helper(s, left, right-1)
+    
+    def isPalindromic(self, s):
+        for i in range(len(s)/2+1):
+            if s[i] != s[-1-i]:
+                return False
+        return True
+
+Solution 3: Dynamic Programming 
+
+Code:
+
+def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        p = [[False for i in range(len(s))] for i in range(len(s))]
+        for i in range(len(s)):
+            p[i][i] = True
+            if i < len(s)-1:
+                if s[i] == s[i+1]:
+                    p[i][i+1] = True
+        longest_length = float('-inf')
+        left = 0
+        right = 0
+        for i in xrange(len(s)-2, -1, -1):
+            for j in range(i+1, len(s)):
+                if (j - i) != 1:
+                    p[i][j] = p[i+1][j-1] and s[i] == s[j]
+                    #print('p['+str(i)+']['+str(j)+'] == '+str(p[i][j]))
+        for i in range(len(s)-1):
+            for j in range(i+1, len(s)):
+                if p[i][j]:
+                    if abs(i-j) > longest_length:
+                        longest_length = abs(i-j)
+                        left = i
+                        right = j
+        return s[left:right+1]
+                
+        
+        
+    def isPalindromic(self, s):
+        for i in range(len(s)/2+1):
+            if s[i] != s[-1-i]:
+                return False
+        return True
