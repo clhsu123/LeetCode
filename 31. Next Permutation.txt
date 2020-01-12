@@ -32,3 +32,47 @@ def nextPermutation(self, nums):
                 
         if reverse:
             nums.reverse()
+
+
+Solution 2: Brute Force
+
+Explanation: Create all possible permutation and find one that fits
+
+Code:
+
+        self.numlen = len(nums)
+        if self.numlen > 1:
+            descend = True
+            for i in range(len(nums)-1):
+                if nums[i] < nums[i+1]:
+                    descend = False
+            if descend:
+                nums.reverse()
+            else:
+                self.database = []
+                self.permutationHelper(nums, '')
+                minimum = float('inf')
+                result_1 = 0
+                for x in range(len(nums)):
+                    result_1 += pow(10, x) * int(nums[-1-x])
+                for x in self.database:
+                    result_2 = 0
+                    for y in range(len(x)):
+                        result_2 += pow(10, y) * int(x[-1-y])
+                    holder = result_2 - result_1
+                    if holder > 0 and holder < minimum:
+                        minimum = holder
+                        ans = result_2
+                if not minimum == float('inf'):
+                    holder = [int(i) for i in str(ans)]
+                    for i in range(len(holder)):
+                        nums[i] = holder[i]
+        
+                
+            
+    def permutationHelper(self, nums, list_):
+        if len(list_) == self.numlen:
+            self.database.append(list_)
+            return
+        for i in range(len(nums)):
+            self.permutationHelper(nums[:i]+nums[i+1:], list_+str(nums[i]))
