@@ -1,0 +1,81 @@
+Programming Language: Python
+
+Explanation URL: https://youtu.be/EdWzV-9lQMw 
+
+Solution: Recursion DFS (Depth First Search)
+
+Code:
+
+def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """        
+        if not p:
+            return not s
+        
+        first_match = bool(s) and p[0] in {s[0], '.'}
+        
+        if len(p) >=2 and p[1] == '*':
+            return self.isMatch(s, p[2:]) or (first_match and self.isMatch(s[1:], p))
+        else:
+            return first_match and self.isMatch(s[1:], p[1:])
+
+Solution 2: DP (Dynamic Programming)
+
+Explanation URL:https://youtu.be/EdWzV-9lQMw 
+
+Code:
+
+def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """        
+        
+        len_s = len(s)
+        len_p = len(p)
+        
+        dp = [[False for i in range(len(p)+1)] for i in range(len(s)+1)]
+        
+        dp[0][0] = True
+        
+        for i in range(2, len_p+1):
+            if p[i-1] == '*':
+                dp[0][i] = dp[0][i-2]
+        for i in range(1, len_s+1):
+            for j in range(1, len_p+1):
+                if s[i-1] == p[j-1] or p[j-1] == '.':
+                    dp[i][j] = dp[i-1][j-1]
+                elif p[j-1] == '*':
+                    if dp[i][j-2]:
+                        dp[i][j] = True
+                    elif s[i-1] == p[j-2] or p[j-2] == '.':
+                        dp[i][j] = dp[i-1][j]
+        return dp[len_s][len_p]
+
+Programming Language: Java
+
+Explanation URL: https://youtu.be/EdWzV-9lQMw 
+
+Solution: Recursion DFS (Depth First Search)
+
+Code:
+
+public boolean isMatch(String s, String p) {
+        if(p.length() == 0) return s.length() == 0;
+        
+        boolean firstMatch = s.length() > 0 && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
+        
+        if (p.length() >= 2 && p.charAt(1) == '*')
+        {
+            return isMatch(s, p.substring(2)) || (firstMatch && isMatch(s.substring(1), p));
+            
+        }
+        else
+        {
+            return firstMatch && isMatch(s.substring(1), p.substring(1));
+        }
+    }
