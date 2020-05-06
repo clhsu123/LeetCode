@@ -1,8 +1,23 @@
 Programming Language: Python
 
+Solution 1: Brute Force
+
 Code:
 
 for i in range(len(nums)-1): # i stands for the first index
             for j in xrange(i+1, len(nums)): # j stands for the second index
                 if (nums[i]+nums[j]) == target: # if we find the index that sum up to target
                     return [i, j] #return the index
+
+Solution 2: Hash Table(Dictionary in Python)
+
+Code:
+
+database = {} #dictionary
+        
+        for index, value in enumerate(nums): # first element of enumerate is index, second element is value
+            remaining = target - value # ramaining is the value we are currently looking for
+            if remaining in database:
+                return [database[remaining], index]
+            database[value] = index
+        return []
