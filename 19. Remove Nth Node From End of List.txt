@@ -1,0 +1,19 @@
+Code:
+
+if head.next != None:
+            count = 0
+            temp = head
+            while(temp != None):
+                count += 1
+                temp = temp.next
+            target = count - n + 1
+            
+            if target == 1:
+                head = head.next
+            else:
+                temp = head
+                for i in range(target-2):
+                    temp = temp.next
+                temp.next = temp.next.next
+        
+            return head
