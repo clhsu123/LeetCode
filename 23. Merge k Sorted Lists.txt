@@ -1,0 +1,17 @@
+Code:
+
+database = []
+        
+        for i in lists:
+            while(i!=None):
+                database.append(i.val)
+                i = i.next
+        database.sort()
+        if len(database) == 0:
+            return None
+        result = ListNode(database[0])
+        temp = result
+        for i in xrange(1, len(database), 1):
+            temp.next = ListNode(database[i])
+            temp = temp.next
+        return result
