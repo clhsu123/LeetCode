@@ -1,0 +1,22 @@
+Solution 1. Backtracking (Using recursion function to traverse)
+
+Code:
+
+	res = [] //result database
+        path = [] //each available combination
+        index = 0 
+        
+        def helper(self, target, path, index, res, nums):
+            if sum(path) == target:
+                res.append(list(path))
+                return
+            elif sum(path) > target:
+                return
+            else:
+                for i in range(index, len(nums)):
+                    path.append(nums[i])
+                    helper(self, target, path, i, res, nums)
+                    path.pop()
+        helper(self, target, path, index, res, candidates)
+        
+        return res
