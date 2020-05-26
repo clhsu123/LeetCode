@@ -1,0 +1,39 @@
+Solution: Use backtracking to find each solution to the question
+Code:
+
+	path = []
+        ans = []
+        
+        def helper(path, n, ans):
+            if sum(path) == n:
+                ans.append(list(path))
+                return
+            elif sum(path) > n:
+                return
+            else:
+                for i in range(1, 3):
+                    path.append(i)
+                    helper(path, n, ans)
+                    path.pop()
+        helper(path, n, ans)
+        return ans
+
+Solution: Only count the number of the solution
+Code:
+
+def C_helper(a, b):
+            x = 1
+            y = 1
+            for i in xrange(a, a-b, -1):
+                x *= i
+            for i in range(1, b+1):
+                y *= i
+            return x/y
+        i = 0
+        ans = 0
+        while(2*i<=n):
+            two = i
+            one = n-(2*i)
+            ans += C_helper(n-i, two)    
+            i += 1
+        return ans
