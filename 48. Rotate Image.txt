@@ -1,0 +1,23 @@
+Solotion: We can rotate the matrix 90 degree clockwise by reversing it and diagonal flipping
+
+Code:
+
+"""
+        if not matrix == None:
+            result = [[0 for i in range(len(matrix))] for i in range(len(matrix))]
+            for i in range(len(matrix)):
+                for j in range(len(matrix)):
+                    result[j][2-i] = matrix[i][j]
+            
+            matrix = result
+            return matrix
+        """
+        # we can rotate the matrix 90 degree clockwise by reversing it and diagonal flipping
+        if not matrix == None:
+            matrix.reverse()
+            for i in range(len(matrix)):
+                for j in range(i):
+                    holder = matrix[i][j]
+                    matrix[i][j] = matrix[j][i]
+                    matrix[j][i] = holder
+            return matrix
