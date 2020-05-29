@@ -1,0 +1,21 @@
+Solution 1: Using hashmap to solve the problem, using defaultdict so that the dict has default value for each key, you don't need to check if the key is in the dict
+
+Time complexity: O(n^2)
+
+Code:
+
+def make_order(string):
+            hash_table = [0 for i in range(26)]
+            ans = ''
+            for i in list(string):
+                hash_table[ord(i)-ord('a')] += 1
+            for i in range(26):
+                if hash_table[i]>0:
+                    for x in range(hash_table[i]):
+                        ans+=chr(ord('a')+i)  
+            return ans
+        ans = collections.defaultdict(list)
+        for i in strs:
+            order = make_order(i)
+            ans[order].append(i)
+        return ans.values()
