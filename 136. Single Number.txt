@@ -1,0 +1,16 @@
+Programming Language: Python
+
+Code:
+
+#hash table, Time Complextiy: O(n)
+        def zero():
+            return 0
+        
+        hash_table = collections.defaultdict(zero)
+        
+        for x in nums:
+            hash_table[x]+=1
+        
+        for key, values in hash_table.items():
+            if values == 1:
+                return key
