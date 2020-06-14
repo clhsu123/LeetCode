@@ -1,0 +1,16 @@
+Programming Language: Python
+
+Code:
+
+#dynamic programming
+        
+        if len(nums)<2:
+            return nums
+        nums.sort()
+        dp = [[num] for num in nums]# dp[i] means the largest subset that we take nums[i] into consideration
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[i]%nums[j]==0 and (len(dp[j])+1)>len(dp[i]):#if nums[j] is divisible by nums[i], then dp[j]+nums[i] is a subset, we compare it to dp[i], if its lennth is greater than len(dp[i]), we replace dp[i] with dp[j]+nums[i]
+                    dp[i] = dp[j]+[nums[i]]
+                
+        return  max(dp, key = len) #there are several subsets in dp, we find the greatest one by length of subsets
