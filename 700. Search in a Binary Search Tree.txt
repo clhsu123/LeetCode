@@ -1,0 +1,14 @@
+Programming Language: Python
+
+Code:
+
+# Use either recursion or iteration to solve the problem
+        node = root
+        while(node):
+            if node.val == val:
+                return node
+            elif node.val > val:
+                node = node.left
+            else:
+                node= node.right
+        return None
