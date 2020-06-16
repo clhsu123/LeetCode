@@ -1,0 +1,23 @@
+Programming Language: Python
+
+Code:
+
+# we don't need a hash table since we only need to return one target value
+        min_val = float('inf')
+        res = 0
+        nums.sort()
+        for i in range(len(nums)-2):
+            left = i+1
+            right = len(nums)-1
+            while(left<right):
+                temp = nums[i]+nums[left]+nums[right]
+                if abs(temp-target)<min_val:
+                    min_val = abs(temp-target)
+                    res = temp
+                if temp<target:
+                    left+=1
+                elif temp>target:
+                    right-=1
+                if abs(res-target) == 0:
+                    break
+        return res
