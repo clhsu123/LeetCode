@@ -1,0 +1,26 @@
+Programming language: C++
+
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        if(citations.size()==0){return 0;} // if empty array is passed in, return 0
+        int ans = 0; // initialize the answer
+        for(int i = citations[citations.size()-1];i>0;i--){ //iterate i from the value of the last element to 1 to check each possible h
+            if (isValid(citations, i)){ // if find available h
+                ans = i;
+                break;
+            }
+        }
+        return ans;
+    }
+    bool isValid(vector<int>& citations, int h){
+        int count_h = 0;
+        for(int i=0; i<citations.size();i++){
+            if (citations[i]>=h){
+                ++count_h;
+            }
+        }
+        return count_h >= h;
+        
+        }
+};
