@@ -1,0 +1,61 @@
+class Node{
+public:
+    bool is_end;
+    Node* children[26];
+    
+    Node(){
+        is_end = false;
+        memset(children, 0 ,sizeof(children));
+    }
+};
+class Trie {
+public:
+    /** Initialize your data structure here. */
+    Node* head;
+    Trie() {
+        head = new Node();
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        Node* current = head;
+        for(int i = 0; i<word.size();i++){
+            int letter = (int)word[i] - (int)'a';
+            if(current->children[letter]==NULL){
+                current->children[letter] = new Node();
+            }
+            current = current->children[letter];
+        }
+        current->is_end = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        bool is_available = true;
+        Node* current = head;
+        for(int i = 0; i<word.size();i++){
+            int letter = (int)word[i] - (int)'a';
+            if(current->children[letter]==NULL){
+                is_available = false;
+                break;
+            }
+            current = current->children[letter];
+        }
+        return is_available&&current->is_end;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        bool is_available = true;
+        Node* current = head;
+        for(int i = 0; i<prefix.size();i++){
+            int letter = (int)prefix[i] - (int)'a';
+            if(current->children[letter]==NULL){
+                is_available = false;
+                break;
+            }
+            current = current->children[letter];
+        }
+        return is_available;
+    }
+};
