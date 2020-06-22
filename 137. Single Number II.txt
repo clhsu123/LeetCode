@@ -1,0 +1,20 @@
+Programming Language: Python
+
+Code:
+
+from collections import defaultdict
+
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        #Time complexity O(n)
+        dic = collections.defaultdict(self.zero)
+        for i in nums:
+            dic[i]+=1
+        new_dic = {v:k for k, v in dic.items()}
+        return new_dic[1]
+    def zero(self):
+        return 0
