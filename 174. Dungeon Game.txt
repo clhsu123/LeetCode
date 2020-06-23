@@ -1,0 +1,63 @@
+Programming Language: Python
+
+Code:
+
+Strategy: Top-down solution (recursion Depth first search)
+
+Use dfs to traverse all of the possible path, and find the answer (Time Limit exceeded)
+
+class Solution(object):
+    def calculateMinimumHP(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
+        """
+        self.global_lowest = float('-inf')
+        self.dfs([dungeon[0][0]], dungeon, 0, 0, dungeon[0][0])
+        if self.global_lowest >= 0:
+            return 1
+        return (-self.global_lowest)+1
+    def dfs(self, path, dungeon, i, j, lowest):
+        if sum(path)<lowest:
+            lowest = sum(path)
+        if len(path) == (len(dungeon)+len(dungeon[0])-1):
+            self.global_lowest = max(self.global_lowest, lowest)
+            return     
+        if i<len(dungeon)-1:
+            path.append(dungeon[i+1][j])
+            self.dfs(path, dungeon, i+1, j, lowest)
+            path.pop()
+        if j<len(dungeon[0])-1:
+            path.append(dungeon[i][j+1])
+            self.dfs(path, dungeon, i, j+1, lowest)
+            path.pop()
+        
+
+Prgramming Language: Python
+
+Strategy: Bottom-up solution (Dynamic Programming)
+
+Code:
+
+class Solution(object):
+    def calculateMinimumHP(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
+        """
+        m = len(dungeon)
+        n = len(dungeon[0])
+        
+        dp = [[float('inf') for i in range(n+1)] for j in range(m+1)]
+        
+        dp[m][n-1] = 1
+        dp[m-1][n] = 1
+        
+        for i in xrange(m-1, -1, -1):
+            for j in xrange(n-1, -1, -1):
+                min_value = min(dp[i+1][j], dp[i][j+1])-dungeon[i][j]
+                if min_value < 1:
+                    dp[i][j] =1
+                else:
+                    dp[i][j] = min_value 
+        return dp[0][0]
