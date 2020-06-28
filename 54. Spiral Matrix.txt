@@ -1,0 +1,43 @@
+Programming Language: Python
+
+Code:
+
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if len(matrix) == 1:
+            return matrix[0]
+        if len(matrix) == 0:
+            return []
+        res = []
+        self.dfs(matrix, res, 0, 0, 0)
+        return res
+    def dfs(self, matrix, res, direction, x, y):
+        dir_ = [(0,1), (1,0), (0, -1), (-1, 0)]
+        height=len(matrix)
+        width = len(matrix[0])
+        res.append(matrix[x][y])
+        matrix[x][y] = "N"
+        if len(res) == height*width:
+            return
+        new_x, new_y = dir_[direction]
+        if 0<=x+new_x<=(height-1) and 0<=y+new_y<=(width-1):
+            if matrix[x+new_x][y+new_y]!="N":
+                x = x+new_x
+                y = y+new_y
+                self.dfs(matrix, res, direction, x, y)
+            else:
+                direction = (direction+1)%4
+                new_x, new_y = dir_[direction]
+                x = x+new_x
+                y = y+new_y
+                self.dfs(matrix, res, direction, x, y)
+        else:
+            direction = (direction+1)%4
+            new_x, new_y = dir_[direction]
+            x = x+new_x
+            y = y+new_y
+            self.dfs(matrix, res, direction, x, y)
