@@ -21,3 +21,30 @@ database = {} #dictionary
                 return [database[remaining], index]
             database[value] = index
         return []
+
+
+Programming Language: C++
+
+
+Solution 1: Brute Force
+
+O(N^2)
+
+Code:
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res;
+        for(int i=0; i<nums.size()-1; i++){
+            for(int j=i+1; j<nums.size(); j++){
+                if(nums[i]+nums[j]==target){
+                    res.push_back(i);
+                    res.push_back(j);
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+};
