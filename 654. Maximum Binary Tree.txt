@@ -1,0 +1,37 @@
+Programming Language: Python
+
+Solution: DFS
+
+Code:
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def constructMaximumBinaryTree(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        return self.dfs(nums)
+    def dfs(self, array):
+        if len(array)==1:
+            return TreeNode(array[0])
+        if len(array) ==0:
+            return None
+        max_val = max(array)
+        root = TreeNode(max_val)
+        index = array.index(max_val)
+        if index == 0:
+            root.left = None
+            root.right = self.dfs(array[index+1:])
+        elif index == len(array):
+            root.right = None
+            root.left = self.dfs(array[:index])
+        else:
+            root.left = self.dfs(array[:index])
+            root.right = self.dfs(array[index+1:])
+        return root
