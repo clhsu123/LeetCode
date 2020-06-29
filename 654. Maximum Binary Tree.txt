@@ -25,13 +25,77 @@ class Solution(object):
         max_val = max(array)
         root = TreeNode(max_val)
         index = array.index(max_val)
-        if index == 0:
-            root.left = None
-            root.right = self.dfs(array[index+1:])
-        elif index == len(array):
-            root.right = None
-            root.left = self.dfs(array[:index])
-        else:
-            root.left = self.dfs(array[:index])
-            root.right = self.dfs(array[index+1:])
+        root.left = self.dfs(array[:index])
+        root.right = self.dfs(array[index+1:])
         return root
+
+Programming Language: C++
+
+Solution: DFS
+
+Code:
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        return dfs(nums);
+    }
+    
+    TreeNode* dfs(vector<int>& array){
+        if(array.size()==0){
+            return nullptr;
+        }
+        if(array.size()==1){
+            return new TreeNode(array[0]);
+        }
+        int root_val = max_of_arr(array);
+        int index = find_index(array, root_val);
+        TreeNode* ptr = new TreeNode(root_val);
+        vector<int> new_arr;
+        new_arr = slice(array, 0, index-1);
+        ptr->left = dfs(new_arr);
+        new_arr = slice(array, index+1, array.size()-1);
+        ptr->right = dfs(new_arr);
+        
+        return ptr;
+        }
+    
+    int max_of_arr(vector<int>& array){
+        int global_max = INT_MIN;
+        for(int i=0; i<array.size();i++){
+            global_max = global_max>array[i]?global_max:array[i];
+        }
+        return global_max;
+    }
+    
+    int find_index(vector<int>& array, int target){
+        int ans;
+        for(int i=0;i<array.size();i++){
+            if(array[i]==target){
+                ans=i;
+                break;
+            }
+        }
+        return ans;
+    }
+    
+    vector<int> slice(vector<int>& array,int start,int end){
+        vector<int> ans;
+        for(int i=start;i<=end;i++){
+            ans.push_back(array[i]);
+        }
+        return ans;
+    }
+    
+};
