@@ -1,5 +1,7 @@
 Programming Language: Python
 
+Code:
+
 if m == 0 or n == 0:
             return 1
         return self.C_calculate(m+n-2, n-1)
@@ -13,3 +15,36 @@ if m == 0 or n == 0:
         for i in range(n):
             b *= (i+1)
         return a/b
+
+Programming Language: C++
+
+Code:
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        return possibility(m+n-2, n-1);
+    }
+    
+    unsigned long long int possibility(const int& a,const int& b){
+        int up = a>=b?a:b;
+        int low = a==up?b:a;
+        if(low>(up-low)){
+            low = up-low;
+        }
+
+        unsigned long long int up_sum=1;
+        unsigned long long int low_sum=1;
+        for(int i=up;i>(up-low);i--){
+            cout<<i<<endl;
+            up_sum*=i;
+        }
+        for(int i=1;i<=low;i++){
+            low_sum*=i;
+        }
+        cout<<up_sum<<endl;
+        cout<<low_sum<<endl;
+        cout<<up_sum/low_sum;
+        return (up_sum/low_sum);
+    }
+};
