@@ -1,0 +1,47 @@
+Programming Language: Python
+
+Solution:
+
+the general strategy is to extend right first and check validity.
+        if it is valid then move the left cursor to narrow down the char set.
+        if it stops being valid, then move the right cursor again. And we also need 
+        some variable to store the global shortest length. 
+
+Code:
+
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+         """
+        
+        
+        ref_dict = Counter(t)
+        curr_dict = Counter()
+        tab = float('inf')
+        left = 0
+        right = 0
+        ans = ""
+        
+        #start from leftmost of the array, extend right pointer first, then move the left pointer rightward to narrow
+        while left<=right<=len(s):
+            if self.is_qualified(curr_dict, ref_dict):
+                curr_char = s[left:right]
+                curr_dict[curr_char[0]]-=1
+                left= left+1
+                if len(curr_char)<tab:
+                    tab = len(curr_char)
+                    ans = curr_char
+            else:
+                right=right+1
+                if right<=len(s):
+                    curr_char = s[left:right]
+                    curr_dict[curr_char[-1]]+=1
+        return ans
+    def is_qualified(self, curr, ref):
+        for k in ref:
+            if k not in curr or ref[k]>curr[k]:
+                return False
+        return True
