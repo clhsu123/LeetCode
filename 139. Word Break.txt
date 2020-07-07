@@ -1,0 +1,59 @@
+Programming Language: Python
+
+Strategy: DFS brute force
+
+Code:
+
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        # brute force, using DFS to get all the possibility
+        self.ans = False
+        self.dfs("", s, wordDict)
+        return self.ans
+    def dfs(self, path, target, dic):
+        if len(path)==len(target):
+            if path==target:
+                self.ans = True;
+        if len(path)>len(target):
+            return
+        for i in dic:
+            path+=i
+            self.dfs(path, target, dic)
+            path=path[:len(path)-len(i)]
+
+
+Stategy: Dynamic Programming
+
+Code:
+
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        n = len(s)
+        dp = [False] * n # set all to False to begin with
+
+        # look at each possible substring of s and set dp[i] to True
+        # if s[:i+1] can be built from words in wordDict
+        for i in range(n):
+            for j in range(i + 1):
+                # if this substring, s[j:i+1], is in wordDict and we're able to
+                #    build s[:j] from words in wordDict (dp[j - 1] is True),
+                # then we're also able to build s[:i+1] from words in wordDict
+                if (j == 0 or dp[j - 1] is True) and s[j:i+1] in wordDict:
+                    dp[i] = True
+
+                    # no need to continue if dp[i] is already true
+                    break
+
+        # only the last value in dp tells us if the full word s
+        # can be built from words in wordDict
+        return dp[n - 1]
