@@ -1,0 +1,47 @@
+Programming Language: C++
+
+Code:
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        map<int, bool> check_row;
+        map<int, bool> check_col;
+        map<int, bool>::iterator iter;
+        /* O(n*m)*/
+        for(int i=0;i<matrix.size();i++){
+            for(int j=0;j<matrix[0].size();j++){
+                if(matrix[i][j]==0){
+                    /*look up of the hashmap is O(1)*/
+                    iter = check_row.find(i);
+                    if(iter==check_row.end()){
+                        check_row.insert(pair<int, bool>(i, true));
+                    }
+                    iter = check_col.find(j);
+                    if(iter==check_col.end()){
+                        check_col.insert(pair<int, bool>(j, true));
+                    }
+                }
+            }
+        }
+        iter = check_row.begin();
+        /* O(n*m)*/
+        while(iter!=check_row.end()){
+            int row = iter->first;
+            for(int j =0;j<matrix[0].size();j++){
+                matrix[row][j]=0;
+            }
+            iter++;
+        }
+        iter = check_col.begin();
+        /* O(n*m)*/
+        while(iter!=check_col.end()){
+            int col = iter->first;
+            for(int i =0;i<matrix.size();i++){
+                matrix[i][col]=0;
+            }
+            iter++;
+        }
+        /*total time complexity: O(3*n*m)*/
+    }
+};
