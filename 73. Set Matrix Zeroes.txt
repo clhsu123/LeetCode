@@ -1,5 +1,7 @@
 Programming Language: C++
 
+Using map
+
 Code:
 
 class Solution {
@@ -44,4 +46,39 @@ public:
         }
         /*total time complexity: O(3*n*m)*/
     }
+};
+
+Using set
+
+Code:
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        set<int> check_row;
+        set<int> check_col;
+        set<int>::iterator iter;
+        /* O(n*m) n is number of row, m is number of column*/
+        for(int i=0;i<matrix.size();i++){
+            for(int j=0;j<matrix[0].size();j++){
+                if(matrix[i][j]==0){
+                    check_row.insert(i);
+                    check_col.insert(j);
+                    }
+                }
+            }
+        for(iter = check_row.begin();iter!=check_row.end();iter++){
+            int row = *iter;
+            for(int j = 0;j<matrix[0].size();j++){
+                matrix[row][j]=0;
+            }
+        }
+        for(iter = check_col.begin();iter!=check_col.end();iter++){
+            int col = *iter;
+            for(int i=0;i<matrix.size();i++){
+                matrix[i][col]=0;
+            }
+        }
+        }
+
 };
