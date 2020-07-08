@@ -33,3 +33,54 @@ public List<List<Integer>> levelOrder(TreeNode root) {
         
         return result;
     }
+
+Programming Langauge: C++
+
+Code:
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> answer;
+        if(root==nullptr) return answer;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(q.size()>0){
+            int length = q.size();
+            vector<int> path;
+            for(int i=0;i<length;i++){
+                TreeNode* holder = q.front();
+                q.pop();
+                path.push_back(holder->val);
+                if(holder->left!=nullptr){
+                    q.push(holder->left);
+                }
+                if(holder->right!=nullptr){
+                    q.push(holder->right);
+                }
+                
+            }
+            answer.push_back(path);
+        }
+        answer = reverse(answer);
+        return answer;
+    }
+    vector<vector<int>> reverse(vector<vector<int>>& input){
+        vector<vector<int>> output;
+        for(int i=input.size()-1;i>=0;i--){
+            output.push_back(input[i]);
+        }
+        return output;
+    }
+};
