@@ -1,0 +1,60 @@
+Programming Lanaguage: Python
+
+Strategy: Recursion DFS
+
+Code:
+
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        
+        ans = []
+        self.dfs([], nums, len(nums), ans)
+        return ans
+    def dfs(self, path, nums, max_depth, ans):
+        ans.append(path[:])
+        if len(path)==max_depth:
+            return
+        for i in range(len(nums)):
+            path.append(nums[i])
+            self.dfs(path, nums[i+1:], max_depth, ans)
+            path.pop()
+
+Programming Language:  C++
+
+Code:
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> path;
+        dfs(path, nums, nums.size(), ans);
+        return ans;
+    }
+    
+    void dfs(vector<int>& path, vector<int>& nums, int max_depth, vector<vector<int>>& ans){
+        ans.push_back(path);
+        if(path.size()==max_depth){
+            return;
+        }
+        for(int i=0;i<nums.size();i++){
+            path.push_back(nums[i]);
+            vector<int> input = cut_vector(nums, i+1, nums.size()-1);
+            dfs(path, input, max_depth, ans);
+            path.pop_back();
+        }
+    }
+    
+    vector<int> cut_vector(vector<int>& input, int start, int end){
+        vector<int> ans;
+        for(int i=start;i<=end;i++){
+            ans.push_back(input[i]);
+        }
+        return ans;
+    }
+};
+
