@@ -1,0 +1,53 @@
+Programming Language: C++
+
+Code:
+
+class Solution {
+public:
+    /* top-down recursion*/
+    bool isMatch(string s, string p) {
+        if(p.size()==0){
+            return s.size()==0;
+        }
+        if(s.size()==0){
+            return p.size()==0 || only_contain(p, '*');
+        }
+        if(p[0]=='*'){
+            return p.size()==1 || isMatch(s, p.substr(1)) || isMatch(s.substr(1), p);
+        }
+        else{
+            bool first_match = p[0] == s[0] || p[0] == '?';
+            return first_match && isMatch(s.substr(1), p.substr(1));
+        }
+    }
+   
+    bool only_contain(string& input, char check){
+        bool ans = true;
+        for(int i=0;i<input.size();i++){
+            if(input[i]!=check){
+                ans = false;
+                break;
+            }
+        }
+        return ans;
+    }
+    string trim(string& input){
+        string output="";
+        for(int i=0;i<input.size();i++){
+            if(input[i]=='*'){
+                if(output.size()==1){
+                    output +='*';
+                    continue;
+                }
+                if(output[output.size()-1]!='*'){
+                    output+='*';
+                    continue;
+                }
+            }
+            else{
+                output += input[i];
+            }
+        }
+        return output;
+    }
+};
