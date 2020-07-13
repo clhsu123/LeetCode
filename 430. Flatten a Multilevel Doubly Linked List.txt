@@ -1,0 +1,54 @@
+Programming Language: Python
+
+Code:
+
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+"""
+
+class Solution(object):
+    def flatten(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        if head == None:
+            return None
+        stack = []
+        current = head
+        new_flatten = Node()
+        holder = new_flatten
+        while(True):
+            holder.val = current.val
+            if current.next==None and current.child==None:
+                tail = Node()
+                tail = holder
+                break
+            if not current.child == None:
+                if(not current.next==None):
+                    stack.append(current.next)
+                current = current.child
+                holder.next = Node()
+                holder.next.prev = holder
+                holder = holder.next
+            elif not current.next==None:
+                current = current.next
+                holder.next = Node()
+                holder.next.prev = holder
+                holder = holder.next
+        while(len(stack)>0):        
+            head_1 = Node()
+            head_1 = stack.pop()
+            tail.next = head_1
+            head_1.prev =tail
+            while(not head_1.next==None):
+                head_1 = head_1.next
+            tail = head_1
+        
+        return new_flatten
