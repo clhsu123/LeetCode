@@ -1,0 +1,129 @@
+cProgramming Language: Python
+
+Code:
+
+class Solution(object):
+    def findOrder(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+    # It doesn't work but fuk this, I'm uploading it anyway
+        if len(prerequisites)==0:
+            return [i for i in range(numCourses)]
+        self.ans = []
+        entry_point= []
+        
+        for i in range(numCourses):
+            check = True
+            for dest, src in prerequisites:
+                if i == dest:
+                    check = False
+                    break;
+            if check:
+                entry_point.append(i)
+                
+        if not len(entry_point) == 0:
+            classAvailable = set()
+            for i in entry_point:
+                self.dfs([i], numCourses, prerequisites, classAvailable)
+        return self.ans
+    
+    def dfs(self, path, numCourses, prerequisites, classAvailable):
+        if len(path)==numCourses:
+            self.ans=path[:]
+            return
+        if not len(path)==0:
+            for i in prerequisites:
+                if i[1]==path[-1]:
+                    classAvailable.add(i[0])
+        for i in path:
+            if i in classAvailable:
+                classAvailable.remove(i)
+        if len(classAvailable)==0:
+            return
+        
+        for i in list(classAvailable):
+            path.append(i)
+            self.dfs(path, numCourses, prerequisites, classAvailable)
+            path.pop()
+
+Programming Language: C++
+
+Code:
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> ans;
+        set<int> classAvailable;
+        
+        if(!prerequisites.size()){
+            vector<int> ans_easy;
+            for(int i =0; i<numCourses;++i){
+                ans_easy.push_back(i);
+            }
+            return ans_easy;
+        }
+        
+        vector<int> entry_point;
+        
+        for(int i=0;i<numCourses;++i){
+            bool check = true;
+            for(int j=0;j<prerequisites.size();++j){
+                if(i==prerequisites[j][0]){
+                check = false;
+                break;
+                }
+            }
+            if(check) entry_point.push_back(i);
+        }
+        
+        if(entry_point.size()){
+            for(int i = 0;i<entry_point.size();++i){
+                vector<int> holder;
+                holder.push_back(entry_point[i]);
+                dfs(holder, numCourses, prerequisites, classAvailable, ans);
+            }
+        }
+        
+        vector<int> final_ans;
+        
+        for(int i=0;i<ans.size();++i){
+            if(ans[i].size()){
+                final_ans = ans[i];
+                break;
+            }
+        }
+        return final_ans;
+    }
+    
+    void dfs(vector<int> path, int numCourses, vector<vector<int>>& prerequisites, set<int> classAvailable, vector<vector<int>>& ans){
+        if(path.size()==numCourses){
+            ans.push_back(path);
+            return;
+        }
+        
+        if(path.size()!=0){
+            for(int i=0;i<prerequisites.size();++i){
+                if(path.back()==prerequisites[i][1]){
+                    classAvailable.insert(path.back());
+                }
+            }
+        }
+        
+        for(int i=0;i<path.size();++i){
+            if(classAvailable.count(path[i])){
+                classAvailable.erase(path[i]);
+            }
+        }
+        
+        if (!classAvailable.size()) return;
+        for(set<int>:: iterator it = classAvailable.begin();it!=classAvailable.end();++it){
+            path.push_back(*it);
+            dfs(path, numCourses, prerequisites, classAvailable, ans);
+            path.pop_back();
+        }
+    }
+};
