@@ -1,4 +1,4 @@
-Programming Language: Python
+﻿Programming Language: Python
 
 Solution 1:
 
@@ -63,3 +63,28 @@ def reverseList(self, head):
         head.next= None
         
         return p
+
+Solution 3:
+
+Iteration
+
+Code:
+
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        
+        # we need a prev to hold the last ListNode
+        
+        curr = head
+        prev = None
+        
+        while(not curr == None):
+            next_ = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_
+        return prev
