@@ -1,0 +1,38 @@
+Programming Language: Python
+
+Strategy: Using class SortedList from module(module is a file that contains codes that could be used somewhere else, library is a kind of module) sortedcontainers
+
+Code:
+
+from sortedcontainers import SortedList
+
+class Solution(object):
+    def reversePairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        """
+        # Let's try brute force first, this is not the best solution anyway
+        # total step = (n-1)+(n-2)+...+1 = (((n-1)+1)*(n-1))/2, therefore time complexity: O(n^2)
+        ans = 0
+        for i in range(len(nums)-1):
+            for j in range(i+1, len(nums)):
+                if nums[i]>2*nums[j]:
+                    ans +=1
+        return ans
+        """
+        
+        # using sorted list
+        
+        ans = 0
+        sl = SortedList()
+        
+        for num in nums:
+            target = 2*num+1
+            index = sl.bisect_left(target)
+            target_num = len(sl)-index
+            ans+=target_num
+            sl.add(num)
+            
+        return ans
