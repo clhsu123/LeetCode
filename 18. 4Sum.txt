@@ -1,0 +1,78 @@
+Programming Language: Python
+
+Strategy: Brute Force:
+
+Time Complexity: O(n^4)
+
+Code:
+
+class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        nums.sort()
+        for i in range(len(nums)-3):
+            for j in range(i+1,len(nums)-2):
+                for k in range(j+1, len(nums)-1):
+                    for l in range(k+1, len(nums)):
+                        if nums[i]+nums[j]+nums[k]+nums[l] == target:
+                            if [nums[i], nums[j], nums[k], nums[l]] not in res:
+                                res.append([nums[i], nums[j], nums[k], nums[l]])
+        return res
+
+Programming Language: C++
+
+Time Complextiy: O(n^(k-1)) = O(n^3) in this case
+
+Code:
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(begin(nums), end(nums));
+        return kSum(nums, 0, target, 4);
+    }
+    vector<vector<int>> kSum(vector<int>& nums, int start, int target, int k){
+        vector<vector<int>> res;
+        if(start==nums.size()||nums[0]*k>target||nums[nums.size()-1]*k<target){
+            return res;
+        }
+        if(k==2){
+            return twoSum(nums, start, target);
+        }
+        for(int i=start;i<nums.size();i++){
+            if(i==start||nums[i]!=nums[i-1]){
+               for(auto& set: kSum(nums, i+1, target-nums[i], k-1)){
+                   res.push_back({nums[i]});
+                   res.back().insert(end(res.back()), begin(set), end(set));
+               } 
+            }
+        }
+        return res;
+    }
+    vector<vector<int>> twoSum(vector<int>&nums, int start, int target){
+        vector<vector<int>> res;
+        int low = start;
+        int high = nums.size()-1;
+        while(low<high){
+            int sum = nums[low]+nums[high];
+            if(sum<target||(low>start&&nums[low]==nums[low-1])){
+                ++low;
+            }
+            else if(sum>target||(high<nums.size()-1&&nums[high]==nums[high+1])){
+                --high;
+            }
+            else{
+                res.push_back({nums[low], nums[high]});
+                low++;
+                high--;
+            }
+        }
+        return res;
+        
+    }
+};

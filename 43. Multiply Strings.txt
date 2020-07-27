@@ -1,0 +1,21 @@
+Programming Language: Python
+
+Code:
+
+class Solution(object):
+    def multiply(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        carry_1 = 1
+        carry_2 = 1
+        res= 0
+        for i in num1[::-1]:
+            for j in num2[::-1]:
+                res+=int(i)*int(j)*carry_1*carry_2
+                carry_2*=10
+            carry_2=1
+            carry_1*=10
+        return str(res)

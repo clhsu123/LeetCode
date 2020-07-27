@@ -1,0 +1,19 @@
+Programming Language: Python
+
+Code:
+
+class Solution(object):
+    def angleClock(self, hour, minutes):
+        """
+        :type hour: int
+        :type minutes: int
+        :rtype: float
+        """
+        if hour == 12:
+            hour = 0
+        hour_deg = hour*30+minutes*0.5
+        min_deg = minutes*6
+        angle = abs(hour_deg-min_deg)
+        if(angle>180):
+            angle = 360-angle
+        return angle
